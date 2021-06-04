@@ -8,12 +8,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app
+  //returns either online NASA API content or database cached result if it already exists
   .route('/neo/feed')
   .get((req, res) => {
     const startDate = req.query.start_date;
     const endDate = req.query.end_date;
 
-    return feedApi.neoFeed(startDate, endDate, content => res.status(200).send(JSON.stringify(content)));
+    return feedApi.neoFeed(startDate, endDate,
+      content => res.status(200).send(JSON.stringify(content)));
   });
 
 app.listen(serviceConfig.port, serviceConfig.host, () =>

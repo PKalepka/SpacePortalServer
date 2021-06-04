@@ -1,36 +1,46 @@
-const typeorm = require('typeorm'),
-    asteroid = require('../entity/asteroid'),
-    baseRepository = require('./baseRepository'),
-    EntitySchema = typeorm.EntitySchema;
+const asteroid = require('../entity/asteroid'),
+    baseRepository = require('./baseRepository');
 
-function listAsteroids(resolve) {
-    return baseRepository.dbConnect().then(function (connection) {
-        connection.query(`SELECT * FROM "asteroid"`).then(function (rawData) {
-            resolve(rawData);
+var asteroidRepository = {
+    connection: baseRepository.dbConnect(),
+    listAsteroids: function (resolve) {
+        return this.connection.then(function (connection) {
+            connection.query(`SELECT * FROM "asteroid"`).then(function (rawData) {
+                resolve(rawData);
+            }).catch(function (error) {
+                console.log("Error: ", error);
+            });
         }).catch(function (error) {
             console.log("Error: ", error);
         });
-    }).catch(function (error) {
-        console.log("Error: ", error);
-    });
-}
-
-function addAsteroids(content, resolve) {
-    return baseRepository.dbConnect().then(function (connection) {
-        const repository = connection.getRepository("asteroid");
-        repository.save(content).then(function (savedContent) {
-            console.log("Content has been saved: ", savedContent);
-
-            resolve(content);
+    },
+    listAsteroidsByDateRange: function (startDate, endDate, resolve) {
+        return this.connection.then(function (connection) {
+            connection.query(`SELECT * FROM "asteroid"
+            WHERE date >= '${startDate}'
+            AND date <  '${endDate}'`).then(function (rawData) {
+                resolve(rawData);
+            }).catch(function (error) {
+                console.log("Error: ", error);
+            });
         }).catch(function (error) {
             console.log("Error: ", error);
         });
-    }).catch(function (error) {
-        console.log("Error: ", error);
-    });
+    },
+    addAsteroids: function addAsteroids(content, resolve) {
+        return this.connection.then(function (connection) {
+            const repository = connection.getRepository("asteroid");
+            repository.save(content).then(function (savedContent) {
+                console.log("Content has been saved: ", savedContent);
+
+                resolve(content);
+            }).catch(function (error) {
+                console.log("Error: ", error);
+            });
+        }).catch(function (error) {
+            console.log("Error: ", error);
+        })
+    }
 }
 
-module.exports = {
-    listAsteroids,
-    addAsteroids
-}
+module.exports = asteroidRepository;

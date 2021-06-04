@@ -4,7 +4,11 @@ module.exports = {
         id: {
             primary: true,
             type: "integer",
-            generated: false
+            isGenerated: true,
+            generationStrategy: 'increment'
+        },
+        reference_id: {
+            type: "text"
         },
         name: {
             type: "text"
@@ -13,7 +17,7 @@ module.exports = {
             type: "boolean"
         },
         date: {
-            type: "text"
+            type: "date"
         }
     }
 };
