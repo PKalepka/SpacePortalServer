@@ -18,6 +18,9 @@ module.exports = {
         },
         date: {
             type: "date"
+        },
+        nasa_jpl_url: {
+            type: "text"
         }
     }
 };

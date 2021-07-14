@@ -24,7 +24,8 @@ function deserializeFeed(data) {
                     reference_id: arr[i].neo_reference_id,
                     name: arr[i].name,
                     is_potentially_hazardous: arr[i].is_potentially_hazardous_asteroid,
-                    date: prop
+                    date: prop,
+                    nasa_jpl_url: arr[i].nasa_jpl_url
                 })
             }
         }

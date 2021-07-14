@@ -9,6 +9,7 @@ CREATE TABLE public.asteroid
     name text COLLATE pg_catalog."default",
     is_potentially_hazardous boolean,
     date date,
+    nasa_jpl_url text COLLATE pg_catalog."default",
     CONSTRAINT asteroid_pkey PRIMARY KEY (id)
 )
 
