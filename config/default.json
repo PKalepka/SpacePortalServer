@@ -1,7 +1,7 @@
 {
-    "Service": {
-      "host": "127.0.0.1",
-      "port": 7000
-    },
-    "ApiKey": "iIyq87F6POWBiufgQlNe7cHYpIPufbXepwgIehgE"
-  }
+  "Service": {
+    "host": "127.0.0.1",
+    "port": 7000
+  },
+  "ApiKey": "iIyq87F6POWBiufgQlNe7cHYpIPufbXepwgIehgE"
+}

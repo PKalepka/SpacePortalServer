@@ -1,8 +1,8 @@
-const express = require("express"),
-  config = require("config"),
-  app = express(),
-  serviceConfig = config.get("Service"),
-  feedApi = require("./api/neoFeed");
+const express = require("express");
+const config = require("config");
+const app = express();
+const serviceConfig = config.get("Service");
+const feedApi = require("./api/neoFeed");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

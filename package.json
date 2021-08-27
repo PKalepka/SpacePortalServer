@@ -1,4 +1,17 @@
 {
+  "name": "spaceportalserver",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "asteroid",
+    "space"
+  ],
+  "author": "Pavlo Kalepka <p.kalepka@gmail.com>",
+  "license": "MIT",
+  "description": "Service provides information using NASA API",
   "dependencies": {
     "axios": "^0.21.1",
     "config": "^3.3.6",

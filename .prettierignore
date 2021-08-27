@@ -1,0 +1,3 @@
+# Ignore directories:
+**/.svn
+**/node_modules
