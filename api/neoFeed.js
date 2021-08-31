@@ -1,15 +1,12 @@
 const axios = require("axios");
-const config = require("config");
-const apiKey = config.get("ApiKey");
 const asteroidRepository = require("../repository/asteroidRepository");
 
 function getFormattedDate(dayOfMonth) {
-  var date = new Date();
-  return `${date.getFullYear()}-${date.getMonth()}-${dayOfMonth}`;
+  return `${dayOfMonth.getFullYear()}-${dayOfMonth.getMonth()}-${dayOfMonth.getDate()}`;
 }
 
 function getApiNasaNeoFeedUrl(startDate, endDate) {
-  return `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${apiKey}`;
+  return `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${process.env.DEV_API_KEY}`;
 }
 
 function deserializeFeed(data) {
@@ -53,11 +50,13 @@ function getFeedOnline(startDate, endDate, resolve) {
 }
 
 function neoFeed(start, end, resolve) {
-  const today = new Date().getDate();
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   const startDate =
     typeof start !== "undefined" ? start : getFormattedDate(today);
-  const endDate =
-    typeof end !== "undefined" ? end : getFormattedDate(today + 1);
+  const endDate = typeof end !== "undefined" ? end : getFormattedDate(tomorrow);
 
   return asteroidRepository.listAsteroidsByDateRange(
     startDate,

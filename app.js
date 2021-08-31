@@ -1,7 +1,9 @@
+const dotenv = require("dotenv").config({
+  path: "./config/.env",
+  debug: process.env.DEBUG,
+});
 const express = require("express");
-const config = require("config");
 const app = express();
-const serviceConfig = config.get("Service");
 const feedApi = require("./api/neoFeed");
 
 app.use(express.json());
@@ -22,8 +24,11 @@ app
     );
   });
 
-app.listen(serviceConfig.port, serviceConfig.host, () =>
+app.listen(process.env.DEV_SERVICE_PORT, process.env.DEV_SERVICE_HOST, () => {
+  if (dotenv.error) {
+    console.log(`dotenv error: ${dotenv.error}`);
+  }
   console.log(
-    `Server listens http://${serviceConfig.host}:${serviceConfig.port}`
-  )
-);
+    `Server listens http://${process.env.DEV_SERVICE_PORT}:${process.env.DEV_SERVICE_HOST}`
+  );  
+});
