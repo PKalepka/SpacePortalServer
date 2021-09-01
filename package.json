@@ -7,7 +7,7 @@
     "prepare": "husky install",
     "lint": "eslint --debug",
     "lint:write": "eslint --debug --fix",
-    "prettier": "prettier --write **/*.(js|json)"
+    "prettier": "prettier --write **/*.{js,json}"
   },
   "husky": {
     "hooks": {

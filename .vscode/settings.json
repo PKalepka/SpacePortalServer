@@ -1,7 +1,7 @@
 {
-    "prettier.endOfLine": "crlf",
-    "editor.formatOnSave": false,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    }
+  "prettier.endOfLine": "crlf",
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

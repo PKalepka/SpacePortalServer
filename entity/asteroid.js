@@ -1,26 +1,26 @@
 module.exports = {
-  name: "asteroid",
+  name: 'asteroid',
   columns: {
     id: {
       primary: true,
-      type: "integer",
+      type: 'integer',
       isGenerated: true,
-      generationStrategy: "increment",
+      generationStrategy: 'increment',
     },
     reference_id: {
-      type: "text",
+      type: 'text',
     },
     name: {
-      type: "text",
+      type: 'text',
     },
     is_potentially_hazardous: {
-      type: "boolean",
+      type: 'boolean',
     },
     date: {
-      type: "date",
+      type: 'date',
     },
     nasa_jpl_url: {
-      type: "text",
+      type: 'text',
     },
   },
 };

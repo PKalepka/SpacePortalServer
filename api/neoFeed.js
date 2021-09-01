@@ -1,5 +1,5 @@
-const axios = require("axios");
-const asteroidRepository = require("../repository/asteroidRepository");
+const axios = require('axios');
+const asteroidRepository = require('../repository/asteroidRepository');
 
 function getFormattedDate(dayOfMonth) {
   return `${dayOfMonth.getFullYear()}-${dayOfMonth.getMonth()}-${dayOfMonth.getDate()}`;
@@ -54,19 +54,12 @@ function neoFeed(start, end, resolve) {
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  const startDate =
-    typeof start !== "undefined" ? start : getFormattedDate(today);
-  const endDate = typeof end !== "undefined" ? end : getFormattedDate(tomorrow);
+  const startDate = typeof start !== 'undefined' ? start : getFormattedDate(today);
+  const endDate = typeof end !== 'undefined' ? end : getFormattedDate(tomorrow);
 
-  return asteroidRepository.listAsteroidsByDateRange(
-    startDate,
-    endDate,
-    (content) => {
-      content.length !== 0
-        ? resolve(content)
-        : getFeedOnline(startDate, endDate, resolve);
-    }
-  );
+  return asteroidRepository.listAsteroidsByDateRange(startDate, endDate, (content) => {
+    content.length !== 0 ? resolve(content) : getFeedOnline(startDate, endDate, resolve);
+  });
 }
 
 module.exports = {
