@@ -3,22 +3,26 @@ const dotenv = require('dotenv').config({
   debug: process.env.DEBUG,
 });
 const express = require('express');
+const cors = require('cors');
 const app = express();
-const feedApi = require('./api/neoFeed');
+const FeedApi = require('./api/feedApi');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app
   //returns either online NASA API content or database cached result if it already exists
   .route('/neo/feed')
   .get((req, res) => {
-    const startDate = req.query.start_date;
-    const endDate = req.query.end_date;
+    (async () => {
+      const startDate = req.query.start_date;
+      const endDate = req.query.end_date;
 
-    return feedApi.neoFeed(startDate, endDate, (content) =>
-      res.setHeader('Access-Control-Allow-Origin', '*').status(200).send(JSON.stringify(content)),
-    );
+      var content = await new FeedApi().neoFeed(startDate, endDate);
+      res.status(200).send(JSON.stringify(content));
+      return content;
+    })();
   });
 
 app.listen(process.env.DEV_SERVICE_PORT, process.env.DEV_SERVICE_HOST, () => {

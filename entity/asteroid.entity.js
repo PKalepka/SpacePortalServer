@@ -1,4 +1,6 @@
-module.exports = {
+const EntitySchema = require("typeorm").EntitySchema;
+
+module.exports = new EntitySchema({
   name: 'asteroid',
   columns: {
     id: {
@@ -7,20 +9,20 @@ module.exports = {
       isGenerated: true,
       generationStrategy: 'increment',
     },
-    reference_id: {
+    referenceId: {
       type: 'text',
     },
     name: {
       type: 'text',
     },
-    is_potentially_hazardous: {
+    isPotentiallyHazardous: {
       type: 'boolean',
     },
     date: {
       type: 'date',
     },
-    nasa_jpl_url: {
+    nasaJplUrl: {
       type: 'text',
     },
   },
-};
+});
