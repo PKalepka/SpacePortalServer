@@ -1,5 +1,5 @@
 const AsteroidRepository = require('../repository/asteroidRepository');
-const ExternalService = require('./externalServices');
+const ExternalService = require('./externalService');
 const AsteroidMapper = require('../mapper/asteroid.mapper');
 
 module.exports = class FeedApi {
@@ -25,15 +25,11 @@ module.exports = class FeedApi {
   }
 
   async handleNewAsteroids(startDate, endDate) {
-    try {
-      var newAsteroids = await this._externalService.getFeedOnline(startDate, endDate);
-      const content = this._asteroidMapper.fromApi(newAsteroids);
-      await this._asteroidRepository.addAsteroids(content);
+    var newAsteroids = await this._externalService.getFeedOnline(startDate, endDate);
+    const content = this._asteroidMapper.fromApi(newAsteroids);
+    await this._asteroidRepository.addAsteroids(content);
 
-      return content;
-    } catch (error) {
-      console.error(error);
-    }
+    return content;
   }
 
   async neoFeed(start, end) {

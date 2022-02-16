@@ -19,8 +19,17 @@ const connection = (function () {
   };
 
   return {
-    get: function () {
+    get: () => {
       return instance || (instance = createInstance());
+    },
+    close: async () => {
+      if (instance) {
+        const connection = await instance;
+        await connection.close();
+        console.log('Database connection have been closed.');
+      } else {
+        console.log('Database connection was closed.');
+      }
     },
   };
 })();

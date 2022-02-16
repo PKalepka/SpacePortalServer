@@ -1,38 +1,25 @@
 const baseRepository = require('./baseRepository');
 
 module.exports = class AsteroidRepository {
-  _connection = baseRepository.connection.get();
+  _getConnection = async () => await baseRepository.connection.get();
 
-  _result = async (getResponse, createConnection) => {
-    try {
-      const connection = await createConnection;
-      return await getResponse(connection);
-    } catch (error) {
-      console.log('Error: ', error);
-    }
+  listAsteroidsByDateRange = async (startDate, endDate) => {
+    const connection = await this._getConnection();
+
+    return connection
+      .getRepository('asteroid')
+      .createQueryBuilder('asteroid')
+      .where('asteroid.date >= :startDate', { startDate: startDate })
+      .andWhere('asteroid.date <= :endDate', { endDate: endDate })
+      .getMany();
   };
 
-  async listAsteroidsByDateRange(startDate, endDate) {
-    const getResponse = async (connection) => {
-      return await connection
-        .getRepository('asteroid')
-        .createQueryBuilder('asteroid')
-        .where('asteroid.date >= :startDate', { startDate: startDate })
-        .andWhere('asteroid.date <= :endDate', { endDate: endDate })
-        .getMany();
-    };
+  addAsteroids = async (content) => {
+    const connection = await this._getConnection();
+    const repository = connection.getRepository('asteroid');
+    const savedContent = await repository.save(content);
+    console.log('Content has been saved: ', savedContent);
 
-    return await this._result(getResponse, this._connection);
-  }
-  async addAsteroids(content) {
-    const getResponse = async (connection) => {
-      const repository = connection.getRepository('asteroid');
-      const savedContent = await repository.save(content);
-      console.log('Content has been saved: ', savedContent);
-
-      return content;
-    };
-
-    return await this._result(getResponse, this._connection);
-  }
+    return content;
+  };
 };
